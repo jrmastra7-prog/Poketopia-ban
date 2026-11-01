@@ -144,6 +144,7 @@ var DATA = {
     { name: "Démétéros", form: "Avatar", sprite: d(645), type: "full" },
     { name: "Deoxys", form: "Sauf Vitesse", sprite: d(386), type: "full", reason: "Banni, sauf la forme Vitesse qui est débannie jouable sans être broken." },
     { name: "Dialga", sprite: d(483), type: "full" },
+    { name: "Dialga", form: "Originel", sprite: d(10245), type: "full" },
     { name: "Éthernatos", sprite: d(890), type: "full" },
     { name: "Farfurex", sprite: d(903), type: "moves", moves: ["Dire Claw"], reason: "Débanni : seule l’attaque Dire Claw reste interdite pour la sleep clause." },
     { name: "Feu-Perçant", sprite: d(1020), type: "full" },
@@ -164,6 +165,7 @@ var DATA = {
     { name: "Mewtwo", sprite: d(150), type: "full" },
     { name: "Solgaleo", sprite: d(791), type: "full" },
     { name: "Palkia", sprite: d(484), type: "full" },
+    { name: "Palkia", form: "Originel", sprite: d(10246), type: "full" },
     { name: "Rayquaza", sprite: d(384), type: "full" },
     { name: "Reshiram", sprite: d(643), type: "full" },
     { name: "Shaymin", sprite: d(492), type: "full" },
@@ -174,7 +176,7 @@ var DATA = {
     { name: "Zacian", form: "Les 2 formes", sprite: d(888), type: "full" },
     { name: "Zamazenta", form: "Bouclier", sprite: d(889), type: "full" },
     { name: "Zekrom", sprite: d(644), type: "full" },
-    { name: "Darmanitan", form: "Galar", sprite: d(555), type: "full" },
+    { name: "Darumacho", form: "Galar", sprite: d(10177), type: "full" },
     { name: "Hydragon", sprite: d(882), type: "full" },
     { name: "Baojian", sprite: d(1002), type: "full" },
     { name: "Genesect", sprite: d(649), type: "full" },
@@ -183,7 +185,12 @@ var DATA = {
     { name: "Zygarde", form: "50 % & Complète", sprite: d(718), type: "full" },
     { name: "Shifours", form: "Ténèbres", sprite: d(892), type: "full" },
     { name: "Marshadow", sprite: d(802), type: "full" },
-    { name: "Xerneas", sprite: d(716), type: "full" }
+    { name: "Xerneas", sprite: d(716), type: "full" },
+    { name: "Necrozma", form: "Ultra", sprite: d(10157), type: "full" },
+    { name: "Necrozma", form: "Ailes de l’Aurore", sprite: d(10156), type: "full" },
+    { name: "Necrozma", form: "Crinière du Couchant", sprite: d(10155), type: "full" },
+    { name: "Sylveroy", form: "Cavalier du Froid", sprite: d(10193), type: "full" },
+    { name: "Sylveroy", form: "Cavalier d’Effroi", sprite: d(10194), type: "full" }
   ]
 };
 
@@ -225,7 +232,6 @@ var CLAUSES = [
    why (facultatif) = ta raison du ban, ajoutée à la fin de l’explication */
 var RESTRICT = [
   { title: "Attaques bannies", color: "#e4423a", items: [
-    { name: "Puissance Cachée", en: "Hidden Power", desc: "Attaque dont le type et la puissance dépendent des IV du Pokémon." },
     { name: "Assistance", en: "Assist", desc: "Utilise au hasard une attaque d’un autre Pokémon de l’équipe." },
     { name: "Hommage Posthume", en: "Last Respects", desc: "Sa puissance augmente avec le nombre d’équipiers déjà K.O." },
     { name: "Queulonage", en: "Shed Tail", desc: "Le lanceur perd la moitié de ses PV pour créer un clone et passer la main à un équipier." },
