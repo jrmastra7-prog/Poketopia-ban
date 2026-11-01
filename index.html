@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pokémon restreints – Cobblemon</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1f3d4d;--sky:#9ad8ec;--sky2:#bfe8f3;--mint:#d4f1dc;--white:#fffdf8;--red:#e4423a;--amber:#f2a516;--slot:#e6f4f7;--slot-edge:#b6dbe6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;padding-bottom:190px;
+background:
+ radial-gradient(circle at 12% 8%,rgba(255,255,255,.7) 0 90px,transparent 91px),
+ radial-gradient(circle at 88% 16%,rgba(255,255,255,.55) 0 60px,transparent 61px),
+ linear-gradient(180deg,var(--sky) 0,var(--sky2) 340px,var(--mint) 100%);
+background-attachment:fixed}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+header{text-align:center;padding:40px 0 22px}
+.logo{display:block;margin:0 auto 12px;width:auto;height:auto;max-width:min(300px,80%);max-height:130px;object-fit:contain}
+.ball{width:64px;height:64px;border-radius:50%;margin:0 auto 10px;border:5px solid var(--ink);position:relative;
+ background:linear-gradient(180deg,var(--red) 0 46%,var(--ink) 46% 54%,var(--white) 54%)}
+.ball::after{content:"";position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:var(--white);border:4px solid var(--ink)}
+h1{font-family:Fredoka,Nunito,system-ui,sans-serif;font-weight:700;font-size:clamp(2rem,6vw,3.2rem);margin:0;line-height:1.05}
+.sub{margin:8px auto 0;max-width:46ch;font-weight:700}
+.by{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px;font-weight:800}
+.authors{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.au{display:flex;align-items:center;gap:8px;background:var(--white);border:3px solid var(--ink);border-radius:999px;padding:3px 14px 3px 3px;font-family:Fredoka,Nunito,sans-serif;font-weight:600}
+.pp{width:38px;height:38px;border-radius:50%;border:3px solid var(--ink);overflow:hidden;display:grid;place-items:center;background:var(--amber);font-weight:700}
+.pp img{width:100%;height:100%;object-fit:cover}
+.legend{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px 0 0}
+.pill{display:flex;align-items:center;gap:8px;background:var(--white);border:3px solid var(--ink);border-radius:999px;padding:4px 14px 4px 8px;font-weight:800;font-size:.88rem}
+.sw{width:18px;height:18px;border-radius:50%;background:var(--red);border:3px solid var(--ink)}
+.sw.p{background:var(--amber)}
+.search{display:block;margin:16px auto 0;width:min(320px,100%);padding:8px 16px;border:3px solid var(--ink);border-radius:999px;font:inherit;font-weight:700;color:var(--ink);background:var(--white)}
+.slot[hidden]{display:none}
+.box{margin-top:24px;background:var(--white);border:4px solid var(--ink);border-radius:26px;box-shadow:0 8px 0 var(--ink);overflow:hidden}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px;background:var(--ink);color:var(--white)}
+.bar h2{margin:0;font-family:Fredoka,Nunito,sans-serif;font-size:1.35rem;font-weight:600}
+.bar span{font-weight:800;font-size:.9rem;opacity:.85}
+.desc{margin:0;padding:12px 18px 0;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;padding:16px 16px 20px}
+.slot{position:relative;overflow:hidden;background:var(--slot);border:3px solid var(--slot-edge);border-radius:18px;padding:8px 4px 8px;text-align:center;cursor:pointer;font:inherit;color:inherit;width:100%;
+ box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -4px 0 rgba(31,61,77,.08);transition:transform .12s}
+.slot:hover,.slot.on{transform:translateY(-3px);border-color:var(--ink)}
+.slot:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.sprite{width:80px;height:80px;margin:0 auto;display:grid;place-items:center;font-family:Fredoka,sans-serif;font-size:2rem;font-weight:700;color:var(--slot-edge)}
+.sprite img{width:80px;height:80px;object-fit:contain;image-rendering:pixelated}
+.slot.full .sprite img{filter:grayscale(1) opacity(.55)}
+.name{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:.92rem;margin-top:2px}
+.form{display:inline-block;margin-top:2px;padding:0 9px;border-radius:999px;background:var(--ink);color:var(--white);font-size:.68rem;font-weight:800}
+.dlg .form{font-size:.78rem;margin-left:8px;vertical-align:middle}
+.rib{position:absolute;top:10px;left:-30px;width:100px;transform:rotate(-40deg);background:var(--red);color:#fff;font-size:.62rem;font-weight:800;letter-spacing:.04em;padding:2px 0;text-align:center}
+.slot.ok{background:#e1f6e3;border-color:#9ed6a5}
+.slot.ok .rib{background:#2f9e55;color:#fff}
+.sw.g{background:#2f9e55}
+.k.ok{background:#2f9e55;color:#fff}
+.fmt .in{padding:16px 18px 20px}
+.rules{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.rule{display:flex;align-items:center;gap:8px;padding:5px 14px 5px 8px;border-radius:999px;border:3px solid var(--ink);background:#fff;font-weight:800;font-size:.92rem}
+.rule b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;color:#fff;font-size:.8rem;background:#2f9e55}
+.rule.no b{background:var(--red)}
+.cmd{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#eef6f8;border:3px solid var(--ink);border-radius:16px;padding:10px 12px}
+.cmd code{flex:1 1 260px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86rem;font-weight:700;word-break:break-word}
+.cmd button{font:inherit;font-weight:800;border:3px solid var(--ink);background:var(--amber);color:var(--ink);border-radius:999px;padding:4px 16px;cursor:pointer}
+.sm{margin:16px 0 8px;font-family:Fredoka,Nunito,sans-serif;font-size:1.05rem}
+.chip{display:inline-block;border:2.5px solid var(--ink);border-radius:999px;padding:1px 12px;background:#fff;font-weight:800;font-size:.88rem}
+.chip em{font-style:normal;font-weight:700;color:#5b6875;margin-left:4px}
+.rs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;padding:16px 18px 20px}
+.grp h3{margin:0 0 8px;font-family:Fredoka,Nunito,sans-serif;font-size:1.05rem;display:inline-block;color:#fff;border-radius:999px;padding:1px 14px}
+.grp .l{display:flex;flex-wrap:wrap;gap:6px}
+button.chip{font-family:inherit;color:var(--ink);cursor:help}
+button.chip:hover,button.chip:focus-visible{background:var(--amber);outline:none}
+.tip{position:fixed;z-index:50;max-width:280px;background:var(--ink);color:var(--white);border-radius:14px;padding:8px 12px;font-size:.88rem;font-weight:700;line-height:1.35;box-shadow:0 4px 0 rgba(0,0,0,.18);pointer-events:none;opacity:0;transition:opacity .12s}
+.tip.show{opacity:1}
+.slot.moves{background:#fff3d6;border-color:#f2d38a;border-style:dashed}
+.slot.moves .rib{background:var(--amber);color:var(--ink)}
+.dlg{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:760px;margin:0 auto;background:var(--white);border:4px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);padding:14px 18px;transform:translateY(140%);transition:transform .2s}
+.dlg.show{transform:none}
+.dlg .in{display:flex;gap:14px;align-items:center}
+.dlg .sprite{flex:none;width:76px;height:76px;background:var(--slot);border-radius:16px}.dlg .sprite img{width:72px;height:72px}
+.k{display:inline-block;font-size:.78rem;font-weight:800;color:#fff;background:var(--red);border-radius:999px;padding:1px 10px}
+.k.m{background:var(--amber);color:var(--ink)}
+.dlg h3{margin:4px 0 0;font-family:Fredoka,Nunito,sans-serif;font-size:1.25rem}
+.dlg p{margin:2px 0 0;font-size:.96rem}
+.mv{display:inline-block;margin:6px 6px 0 0;padding:1px 10px;border-radius:999px;background:#fff3d6;border:2px dashed var(--amber);font-size:.85rem;font-weight:800}
+@media (prefers-reduced-motion:reduce){.dlg,.slot{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img class="logo" src="https://i.ibb.co/LDMw15GN/poketopia.png" alt="Poketopia">
+    <h1>Pokémon restreints ~ Poketopia</h1>
+    <div class="by"><span>Liste par</span><span class="authors" id="authors"></span></div>
+    <div class="legend">
+      <span class="pill"><i class="sw"></i>Banni</span>
+      <span class="pill"><i class="sw p"></i>Autorisé, avec restrictions</span>
+      <span class="pill"><i class="sw g"></i>Débanni</span>
+    </div>
+    <input class="search" id="q" type="search" placeholder="Chercher un Pokémon…" aria-label="Chercher un Pokémon">
+  </header>
+  <section class="box fmt">
+    <div class="bar"><h2>Format de combat</h2><span>Pokémon Showdown</span></div>
+    <div class="in">
+      <div class="rules">
+        <span class="rule no"><b>✕</b>Pas de Téracristal</span>
+        <span class="rule"><b>✓</b>Z-moves autorisés</span>
+        <span class="rule"><b>✓</b>Méga-évolutions autorisées</span>
+      </div>
+      <h3 class="sm">Clauses standard (tous les matchs)</h3>
+      <div class="rules" id="clauses"></div>
+      <div class="cmd">
+        <code id="cmd">/challenge [Gen9]NatDexDraft @@@ +Nonexistent, ! Obtainable Moves, Terastal Clause</code>
+        <button type="button" id="copy">Copier</button>
+      </div>
+    </div>
+  </section>
+  <div id="app"></div>
+</div>
+<div class="dlg" id="dlg" role="status" aria-live="polite"></div>
+
+<script>
+
+var S = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+function d(n){ return S + n + ".png"; }   
+var AUTHORS = [
+  { name: "Jrm", avatar: "https://i.ibb.co/N67H7j61/2909489cadc74db99568be841157644f.jpg" },
+  { name: "Mate", avatar: "https://i.pinimg.com/736x/57/07/9b/57079b44ee440ec0499124e7b81f11c8.jpg" }
+];
+var DEFAULT_REASON = "Ban de base du serveur.";  
+var DATA = {
+  title: "Ban de base",
+  list: [
+    { name: "Arceus", sprite: d(493), type: "full" },
+    { name: "Courrousinge", sprite: d(979), type: "full", reason: "Banni, par peur du beug derage fist." },
+    { name: "Démétéros", form: "Avatar", sprite: d(645), type: "full" },
+    { name: "Deoxys", form: "Sauf Vitesse", sprite: d(386), type: "full", reason: "Banni, sauf la forme Vitesse qui est débannie jouable sans être broken." },
+    { name: "Dialga", sprite: d(483), type: "full" },
+    { name: "Éthernatos", sprite: d(890), type: "full" },
+    { name: "Farfurex", sprite: d(903), type: "moves", moves: ["Dire Claw"], reason: "Débanni : seule l’attaque Dire Claw reste interdite pour la sleep clause." },
+    { name: "Feu-Perçant", sprite: d(1020), type: "full" },
+    { name: "Flotte-Mèche", sprite: d(987), type: "full" },
+    { name: "Giratina", sprite: d(487), type: "full" },
+    { name: "Glaivodo", sprite: d(998), type: "full" },
+    { name: "Groudon", sprite: d(383), type: "full" },
+    { name: "Ho-Oh", sprite: d(250), type: "full" },
+    { name: "Hotte-de-Fer", sprite: d(991), type: "full" },
+    { name: "Koraidon", sprite: d(1007), type: "full" },
+    { name: "Miraidon", sprite: d(1008), type: "full" },
+    { name: "Kyogre", sprite: d(382), type: "full" },
+    { name: "Kyurem", form: "Blanc", sprite: d(10023), type: "full" },
+    { name: "Kyurem", form: "Noir", sprite: d(10022), type: "full" },
+    { name: "Lugia", sprite: d(249), type: "full" },
+    { name: "Lunala", sprite: d(792), type: "full" },
+    { name: "Magearna", sprite: d(801), type: "full" },
+    { name: "Mewtwo", sprite: d(150), type: "full" },
+    { name: "Solgaleo", sprite: d(791), type: "full" },
+    { name: "Palkia", sprite: d(484), type: "full" },
+    { name: "Rayquaza", sprite: d(384), type: "full" },
+    { name: "Reshiram", sprite: d(643), type: "full" },
+    { name: "Shaymin", sprite: d(492), type: "full" },
+    { name: "Spectreval", sprite: d(897), type: "full" },
+    { name: "Superdofin", sprite: d(964), type: "full" },
+    { name: "Ursaluna", form: "Blood Moon", sprite: d(901), type: "full" },
+    { name: "Chi-Yu", sprite: d(1004), type: "full" },
+    { name: "Zacian", form: "Les 2 formes", sprite: d(888), type: "full" },
+    { name: "Zamazenta", form: "Bouclier", sprite: d(889), type: "full" },
+    { name: "Zekrom", sprite: d(644), type: "full" },
+    { name: "Darmanitan", form: "Galar", sprite: d(555), type: "full" },
+    { name: "Hydragon", sprite: d(635), type: "full" },
+    { name: "Baojian", sprite: d(1002), type: "full" },
+    { name: "Genesect", sprite: d(649), type: "full" },
+    { name: "Mandrillon", sprite: d(804), type: "full" },
+    { name: "Cancrelove", sprite: d(795), type: "full" },
+    { name: "Zygarde", form: "50 % & Complète", sprite: d(718), type: "full" },
+    { name: "Shifours", form: "Ténèbres", sprite: d(892), type: "full" },
+    { name: "Marshadow", sprite: d(802), type: "full" },
+    { name: "Xerneas", sprite: d(716), type: "full" },
+    { name: "Tortank", form: "Méga", sprite: d(10036), type: "full" },
+    { name: "Kangourex", form: "Méga", sprite: d(10039), type: "full" }
+  ]
+};
+
+var ZA = {
+  title: "Ban ZA",
+  color: "#5a3a7a",
+  defaultReason: "Ban ZA du serveur.",
+  list: [
+    { name: "Staross", form: "Méga", sprite: "https://www.pokepedia.fr/images/thumb/3/39/M%C3%A9ga-Staross-LPZA.png/90px-M%C3%A9ga-Staross-LPZA.png", type: "full", reason: "Broken + high speed tier" },
+    { name: "Greninja", form: "Méga Battle Bond", sprite: "https://www.pokepedia.fr/images/thumb/c/c4/M%C3%A9ga-Amphinobi-LPZA.png/111px-M%C3%A9ga-Amphinobi-LPZA.png", type: "full", reason: "Battle Bond donne un boost de stat TROP important" },
+    { name: "Glaivodo", form: "Méga", sprite: "https://www.pokepedia.fr/images/thumb/5/5c/M%C3%A9ga-Glaivodo_%28Official_Game_Art%29-LPZA.png/250px-M%C3%A9ga-Glaivodo_%28Official_Game_Art%29-LPZA.png", type: "full", reason: "Forme de base ban + Mega Broken via les boost" },
+    { name: "Carchacrock", form: "Méga Z", sprite: "https://www.pokepedia.fr/images/1/10/M%C3%A9ga-Carchacrok_Z_%28Official_Game_Art%29-LPZA.png?20260227161428", type: "full", reason: "Mega Z est trop broken via son adaptabilité physique & special + accés a attk de boost via le dlc ZA" },
+    { name: "Zygarde", form: "Méga", sprite: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e57c0ca5-c162-43e7-b0dc-40f215c30321/dku8o9y-32be31ab-131f-49f6-973b-dd54f1807de4.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi9lNTdjMGNhNS1jMTYyLTQzZTctYjBkYy00MGYyMTVjMzAzMjEvZGt1OG85eS0zMmJlMzFhYi0xMzFmLTQ5ZjYtOTczYi1kZDU0ZjE4MDdkZTQuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.cwbqSt_ZIv0Q5coYc_lz5-cASFRDiyg0ho6JQfV2rgs", type: "full", reason: "Aucun monde où je précise pourquoi c’est ban, la mdr" }
+  ]
+};
+
+var OK = {
+  title: "Débannis",
+  color: "#2f7d4f",
+  defaultReason: "Autorisé sur le serveur.",
+  list: [
+    { name: "Ogerpon", form: "Feu", sprite: d(1017), type: "ok", reason: "Pas si fort sans Téracristal." },
+    { name: "Terapagos", sprite: d(1024), type: "ok", reason: "Pas si fort sans Téracristal." }
+  ]
+};
+
+var MEGA = {
+  title: "Méga restreintes",
+  color: "#a8690a",
+  defaultReason: "Autorisée, avec une restriction.",
+  list: [
+    { name: "Lockpin", form: "Méga", sprite: d(10088), type: "moves", moves: ["Danse Lames"], reason: "Méga autorisée, mais Danse Lames est bannie." },
+    { name: "Amphinobi", form: "Méga", sprite: "https://www.pokepedia.fr/images/thumb/c/c4/M%C3%A9ga-Amphinobi-LPZA.png/111px-M%C3%A9ga-Amphinobi-LPZA.png", type: "moves", moves: ["Battle-Bond (talent)"], reason: "Méga autorisée, mais le talent Battle-Bond est banni." }
+  ]
+};
+var CATS = [DATA, MEGA, OK, ZA];
+
+
+var CLAUSES = [
+  { name: "Species Clause", desc: "Interdit d’avoir deux Pokémon de la même espèce dans une équipe." },
+  { name: "Endless Battle Clause", desc: "Interdit les stratégies qui bloquent le combat indéfiniment (boucles infinies sans progression)." },
+  { name: "Sleep Clause", desc: "Un seul Pokémon adverse peut être endormi à la fois par une attaque (Repos excepté)." },
+  { name: "Evasion Clause", desc: "Interdit les attaques, talents et objets qui augmentent l’esquive (ex. Double Équipe)." },
+  { name: "OHKO Clause", desc: "Interdit les attaques qui mettent K.O. en un coup (Guillotine, Empal’Korne, Abîme, Glaciation)." },
+  { name: "Terastal Clause", desc: "Interdit la Téracristallisation : personne ne peut téracristalliser son Pokémon." }
+];
+
+
+var RESTRICT = [
+  { title: "Attaques bannies", color: "#e4423a", items: [
+    { name: "Puissance Cachée", en: "Hidden Power", desc: "Attaque dont le type et la puissance dépendent des IV du Pokémon." },
+    { name: "Assistance", en: "Assist", desc: "Utilise au hasard une attaque d’un autre Pokémon de l’équipe." },
+    { name: "Hommage Posthume", en: "Last Respects", desc: "Sa puissance augmente avec le nombre d’équipiers déjà K.O." },
+    { name: "Queulonage", en: "Shed Tail", desc: "Le lanceur perd la moitié de ses PV pour créer un clone et passer la main à un équipier." },
+    { name: "Second Souffle", en: "Revival Blessing", desc: "Ranime un équipier K.O. avec la moitié de ses PV." } ] },
+  { title: "Talents bannis", color: "#5a3a7a", items: [
+    { name: "Lunatique", en: "Moody", desc: "À chaque tour, augmente fortement une statistique au hasard et en baisse une autre." },
+    { name: "Rassemblement", en: "Power Construct", desc: "Zygarde se transforme en forme Complète quand ses PV passent à la moitié ou moins." } ] },
+  { title: "Objets bannis", color: "#a8690a", items: [
+    { name: "Drattakite", desc: "Méga-gemme de Drattak : permet la Méga-évolution." },
+    { name: "Croc Rasoir", desc: "10 % de chances d’apeurer la cible quand le porteur attaque." },
+    { name: "Vive Griffe", desc: "20 % de chances d’agir en premier dans le tour." },
+    { name: "Métalossite", desc: "Méga-gemme de Métalosse : permet la Méga-évolution." },
+    { name: "Lucarite", desc: "Méga-gemme de Lucario : permet la Méga-évolution." },
+    { name: "Roche Royale", desc: "10 % de chances d’apeurer la cible quand le porteur attaque." },
+    { name: "Ectoplasmite", desc: "Méga-gemme d’Ectoplasma : permet la Méga-évolution." },
+    { name: "Braségalite", desc: "Méga-gemme de Braségali : permet la Méga-évolution." },
+    { name: "Alakazamite", desc: "Méga-gemme d’Alakazam : permet la Méga-évolution." } ] }
+];
+
+
+var dlg = document.getElementById("dlg"), pinned = null;
+function spriteEl(p){
+  var d = document.createElement("div"); d.className = "sprite";
+  if (!p.sprite){ d.textContent = p.name.charAt(0); return d; }
+  var img = new Image(); img.alt = ""; img.loading = "lazy"; img.src = p.sprite;
+  img.onerror = function(){ d.textContent = p.name.charAt(0); };
+  d.appendChild(img); return d;
+}
+function show(p){
+  dlg.textContent = "";
+  var inn = document.createElement("div"); inn.className = "in";
+  inn.appendChild(spriteEl(p));
+  var t = document.createElement("div");
+  var k = document.createElement("span"); k.className = "k" + (p.type === "moves" ? " m" : p.type === "ok" ? " ok" : "");
+  k.textContent = p.type === "moves" ? "Restrictions" : p.type === "ok" ? "Pokémon autorisé" : "Pokémon banni";
+  var h = document.createElement("h3"); h.textContent = p.name;
+  if (p.form){ var f = document.createElement("span"); f.className = "form"; f.textContent = p.form; h.appendChild(f); }
+  var r = document.createElement("p"); r.textContent = p.reason || (p.cat && p.cat.defaultReason) || DEFAULT_REASON;
+  t.append(k, h, r);
+  if (p.type === "moves"){ (p.moves||[]).forEach(function(m){ var s = document.createElement("span"); s.className = "mv"; s.textContent = m; t.appendChild(s); }); }
+  inn.appendChild(t); dlg.appendChild(inn); dlg.classList.add("show");
+}
+function hide(){ dlg.classList.remove("show"); }
+function unpin(){ if (pinned){ pinned.classList.remove("on"); pinned = null; } }
+
+CATS.forEach(function(DATA){
+var box = document.createElement("section"); box.className = "box";
+var bar = document.createElement("div"); bar.className = "bar"; if (DATA.color) bar.style.background = DATA.color;
+var bt = document.createElement("h2"); bt.textContent = DATA.title;
+var bc = document.createElement("span"); bc.textContent = DATA.list.length + " Pokémon";
+bar.append(bt, bc);
+var ds = document.createElement("p"); ds.className = "desc"; ds.textContent = DATA.desc;
+var g = document.createElement("div"); g.className = "grid";
+DATA.list.forEach(function(p){
+  p.cat = DATA;
+  var b = document.createElement("button"); b.type = "button";
+  b.dataset.q = (p.name + " " + (p.form || "")).toLowerCase();
+  b.className = "slot " + (p.type === "moves" ? "moves" : p.type === "ok" ? "ok" : "full");
+  var rib = document.createElement("span"); rib.className = "rib";
+  rib.textContent = p.type === "moves" ? "RESTREINT" : p.type === "ok" ? "AUTORISÉ" : "BANNI"; b.appendChild(rib);
+  b.appendChild(spriteEl(p));
+  var n = document.createElement("div"); n.className = "name"; n.textContent = p.name; b.appendChild(n);
+  if (p.form){ var f = document.createElement("span"); f.className = "form"; f.textContent = p.form; b.appendChild(f); }
+  b.addEventListener("mouseenter", function(){ if (!pinned) show(p); });
+  b.addEventListener("mouseleave", function(){ if (!pinned) hide(); });
+  b.addEventListener("focus", function(){ if (!pinned) show(p); });
+  b.addEventListener("click", function(e){
+    e.stopPropagation();
+    if (pinned === b){ unpin(); hide(); return; }
+    unpin(); pinned = b; b.classList.add("on"); show(p);
+  });
+  g.appendChild(b);
+});
+box.append(bar, ds, g);
+document.getElementById("app").appendChild(box);
+});
+var tip = document.createElement("div"); tip.className = "tip"; tip.setAttribute("role", "tooltip"); document.body.appendChild(tip);
+function showTip(el, txt){
+  tip.textContent = txt; tip.classList.add("show");
+  var r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
+  var x = Math.max(8, Math.min(r.left, window.innerWidth - w - 8));
+  var y = r.bottom + 8; if (y + h > window.innerHeight - 8) y = r.top - h - 8;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+function hideTip(){ tip.classList.remove("show"); }
+CLAUSES.forEach(function(c){
+  var e = document.createElement("button"); e.type = "button"; e.className = "chip"; e.textContent = c.name;
+  e.addEventListener("mouseenter", function(){ showTip(e, c.desc); });
+  e.addEventListener("mouseleave", hideTip);
+  e.addEventListener("focus", function(){ showTip(e, c.desc); });
+  e.addEventListener("blur", hideTip);
+  e.addEventListener("click", function(ev){ ev.stopPropagation(); showTip(e, c.desc); });
+  document.getElementById("clauses").appendChild(e);
+});
+(function(){
+  var box = document.createElement("section"); box.className = "box";
+  var bar = document.createElement("div"); bar.className = "bar";
+  var h = document.createElement("h2"); h.textContent = "Attaques, talents et objets bannis";
+  bar.appendChild(h);
+  var rs = document.createElement("div"); rs.className = "rs";
+  RESTRICT.forEach(function(gr){
+    var w = document.createElement("div"); w.className = "grp";
+    var t = document.createElement("h3"); t.textContent = gr.title; t.style.background = gr.color;
+    var l = document.createElement("div"); l.className = "l";
+    gr.items.forEach(function(it){
+      var c = document.createElement("button"); c.type = "button"; c.className = "chip"; c.textContent = it.name;
+      var tx = it.desc + (it.why ? " Raison du ban : " + it.why : "");
+      c.addEventListener("mouseenter", function(){ showTip(c, tx); });
+      c.addEventListener("mouseleave", hideTip);
+      c.addEventListener("focus", function(){ showTip(c, tx); });
+      c.addEventListener("blur", hideTip);
+      c.addEventListener("click", function(ev){ ev.stopPropagation(); showTip(c, tx); });
+      if (it.en){ var em = document.createElement("em"); em.textContent = "(" + it.en + ")"; c.appendChild(em); }
+      l.appendChild(c);
+    });
+    w.append(t, l); rs.appendChild(w);
+  });
+  box.append(bar, rs); document.getElementById("app").appendChild(box);
+})();
+document.getElementById("q").addEventListener("input", function(e){
+  var v = e.target.value.trim().toLowerCase();
+  document.querySelectorAll(".slot").forEach(function(b){ b.hidden = v && b.dataset.q.indexOf(v) < 0; });
+});
+AUTHORS.forEach(function(a){
+  var w = document.createElement("span"); w.className = "au";
+  var pp = document.createElement("span"); pp.className = "pp";
+  if (a.avatar){ var im = new Image(); im.alt = ""; im.src = a.avatar; im.onerror = function(){ pp.textContent = a.name.charAt(0); }; pp.appendChild(im); }
+  else pp.textContent = a.name.charAt(0);
+  var nm = document.createElement("span"); nm.textContent = a.name;
+  w.append(pp, nm); document.getElementById("authors").appendChild(w);
+});
+document.getElementById("copy").addEventListener("click", function(e){
+  e.stopPropagation();
+  var btn = e.currentTarget, txt = document.getElementById("cmd").textContent;
+  function done(){ btn.textContent = "Copié !"; setTimeout(function(){ btn.textContent = "Copier"; }, 1500); }
+  try { navigator.clipboard.writeText(txt).then(done, function(){ sel(); }); } catch (err) { sel(); }
+  function sel(){ var r = document.createRange(); r.selectNodeContents(document.getElementById("cmd")); var w = window.getSelection(); w.removeAllRanges(); w.addRange(r); btn.textContent = "Sélectionné"; }
+});
+document.addEventListener("click", function(){ unpin(); hide(); hideTip(); });
+document.addEventListener("keydown", function(e){ if (e.key === "Escape"){ unpin(); hide(); } });
+</script>
+</body>
+</html>
