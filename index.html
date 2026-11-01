@@ -96,7 +96,6 @@ button.chip:hover,button.chip:focus-visible{background:var(--amber);outline:none
     <div class="legend">
       <span class="pill"><i class="sw"></i>Banni</span>
       <span class="pill"><i class="sw p"></i>Autorisé, avec restrictions</span>
-      <span class="pill"><i class="sw g"></i>Débanni</span>
     </div>
     <input class="search" id="q" type="search" placeholder="Chercher un Pokémon…" aria-label="Chercher un Pokémon">
   </header>
@@ -146,7 +145,6 @@ var DATA = {
     { name: "Dialga", sprite: d(483), type: "full" },
     { name: "Dialga", form: "Originel", sprite: d(10245), type: "full" },
     { name: "Éthernatos", sprite: d(890), type: "full" },
-    { name: "Farfurex", sprite: d(903), type: "moves", moves: ["Dire Claw"], reason: "Débanni : seule l’attaque Dire Claw reste interdite pour la sleep clause." },
     { name: "Feu-Perçant", sprite: d(1020), type: "full" },
     { name: "Flotte-Mèche", sprite: d(987), type: "full" },
     { name: "Giratina", sprite: d(487), type: "full" },
@@ -174,7 +172,7 @@ var DATA = {
     { name: "Ursaluna", form: "Blood Moon", sprite: d(901), type: "full" },
     { name: "Chi-Yu", sprite: d(1004), type: "full" },
     { name: "Zacian", form: "Les 2 formes", sprite: d(888), type: "full" },
-    { name: "Zamazenta", form: "Bouclier", sprite: d(889), type: "full" },
+    { name: "Zamazenta", form: "Bouclier", sprite: d(10189), type: "full" },
     { name: "Zekrom", sprite: d(644), type: "full" },
     { name: "Darumacho", form: "Galar", sprite: d(10177), type: "full" },
     { name: "Hydragon", sprite: d(882), type: "full" },
@@ -196,15 +194,6 @@ var DATA = {
 
 /* ---- Catégorie Ban ZA (sprite vide = initiale ; colle une URL pour mettre l’image) ---- */
 /* ---- Débannis : Pokémon réputés forts mais autorisés ---- */
-var OK = {
-  title: "Débannis",
-  color: "#2f7d4f",
-  defaultReason: "Autorisé sur le serveur.",
-  list: [
-    { name: "Ogerpon", form: "Feu", sprite: d(1017), type: "ok", reason: "Pas si fort sans Téracristal." },
-    { name: "Terapagos", sprite: d(1024), type: "ok", reason: "Pas si fort sans Téracristal." }
-  ]
-};
 /* ---- Méga autorisées, mais avec restriction (attaque ou talent banni) ---- */
 var MEGA = {
   title: "Méga restreintes",
@@ -215,7 +204,7 @@ var MEGA = {
     { name: "Amphinobi", form: "Méga", sprite: "https://www.pokepedia.fr/images/thumb/c/c4/M%C3%A9ga-Amphinobi-LPZA.png/111px-M%C3%A9ga-Amphinobi-LPZA.png", type: "moves", moves: ["Battle-Bond (talent)"], reason: "Méga autorisée, mais le talent Battle-Bond est banni." }
   ]
 };
-var CATS = [DATA, MEGA, OK];
+var CATS = [DATA, MEGA];
 
 /* ---- Clauses standard ---- */
 var CLAUSES = [
@@ -236,6 +225,7 @@ var RESTRICT = [
     { name: "Hommage Posthume", en: "Last Respects", desc: "Sa puissance augmente avec le nombre d’équipiers déjà K.O." },
     { name: "Queulonage", en: "Shed Tail", desc: "Le lanceur perd la moitié de ses PV pour créer un clone et passer la main à un équipier." },
     { name: "Second Souffle", en: "Revival Blessing", desc: "Ranime un équipier K.O. avec la moitié de ses PV." },
+    { name: "Dire Claw", desc: "Attaque de Farfurex : 50 % de chances d’empoisonner, de paralyser ou d’endormir la cible.", why: "Pour la Sleep Clause." },
     { name: "Relais", en: "Baton Pass", desc: "Le lanceur change de Pokémon en transmettant ses boosts de statistiques et certains effets à son remplaçant." } ] },
   { title: "Talents bannis", color: "#5a3a7a", items: [
     { name: "Lunatique", en: "Moody", desc: "À chaque tour, augmente fortement une statistique au hasard et en baisse une autre." },
