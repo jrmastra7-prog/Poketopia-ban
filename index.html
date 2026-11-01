@@ -121,14 +121,21 @@ button.chip:hover,button.chip:focus-visible{background:var(--amber);outline:none
 <div class="dlg" id="dlg" role="status" aria-live="polite"></div>
 
 <script>
-
+/* ============ À MODIFIER : tes données ============
+   type  : "full"  = Pokémon banni
+           "moves" = Pokémon autorisé, mais avec attaques bannies (liste dans moves)
+   sprite: URL de l’image du Pokémon
+   reason: la raison affichée au survol / au clic
+   form  : (facultatif) forme particulière, ex. "Forme d’Alola", "Méga", "Gigamax".
+           Une même espèce peut apparaître plusieurs fois avec des formes différentes. */
 var S = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
-function d(n){ return S + n + ".png"; }   
+function d(n){ return S + n + ".png"; }   // sprite par numéro de Pokédex (PokeAPI)
+/* ---- Auteurs : colle l’URL de la photo de profil dans avatar ---- */
 var AUTHORS = [
   { name: "Jrm", avatar: "https://i.ibb.co/N67H7j61/2909489cadc74db99568be841157644f.jpg" },
   { name: "Mate", avatar: "https://i.pinimg.com/736x/57/07/9b/57079b44ee440ec0499124e7b81f11c8.jpg" }
 ];
-var DEFAULT_REASON = "Ban de base du serveur.";  
+var DEFAULT_REASON = "Ban de base du serveur.";  // affichée si un Pokémon n’a pas de reason
 var DATA = {
   title: "Ban de base",
   list: [
@@ -176,25 +183,12 @@ var DATA = {
     { name: "Zygarde", form: "50 % & Complète", sprite: d(718), type: "full" },
     { name: "Shifours", form: "Ténèbres", sprite: d(892), type: "full" },
     { name: "Marshadow", sprite: d(802), type: "full" },
-    { name: "Xerneas", sprite: d(716), type: "full" },
-    { name: "Tortank", form: "Méga", sprite: d(10036), type: "full" },
-    { name: "Kangourex", form: "Méga", sprite: d(10039), type: "full" }
+    { name: "Xerneas", sprite: d(716), type: "full" }
   ]
 };
 
-var ZA = {
-  title: "Ban ZA",
-  color: "#5a3a7a",
-  defaultReason: "Ban ZA du serveur.",
-  list: [
-    { name: "Staross", form: "Méga", sprite: "https://www.pokepedia.fr/images/thumb/3/39/M%C3%A9ga-Staross-LPZA.png/90px-M%C3%A9ga-Staross-LPZA.png", type: "full", reason: "Broken + high speed tier" },
-    { name: "Greninja", form: "Méga Battle Bond", sprite: "https://www.pokepedia.fr/images/thumb/c/c4/M%C3%A9ga-Amphinobi-LPZA.png/111px-M%C3%A9ga-Amphinobi-LPZA.png", type: "full", reason: "Battle Bond donne un boost de stat TROP important" },
-    { name: "Glaivodo", form: "Méga", sprite: "https://www.pokepedia.fr/images/thumb/5/5c/M%C3%A9ga-Glaivodo_%28Official_Game_Art%29-LPZA.png/250px-M%C3%A9ga-Glaivodo_%28Official_Game_Art%29-LPZA.png", type: "full", reason: "Forme de base ban + Mega Broken via les boost" },
-    { name: "Carchacrock", form: "Méga Z", sprite: "https://www.pokepedia.fr/images/1/10/M%C3%A9ga-Carchacrok_Z_%28Official_Game_Art%29-LPZA.png?20260227161428", type: "full", reason: "Mega Z est trop broken via son adaptabilité physique & special + accés a attk de boost via le dlc ZA" },
-    { name: "Zygarde", form: "Méga", sprite: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e57c0ca5-c162-43e7-b0dc-40f215c30321/dku8o9y-32be31ab-131f-49f6-973b-dd54f1807de4.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi9lNTdjMGNhNS1jMTYyLTQzZTctYjBkYy00MGYyMTVjMzAzMjEvZGt1OG85eS0zMmJlMzFhYi0xMzFmLTQ5ZjYtOTczYi1kZDU0ZjE4MDdkZTQuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.cwbqSt_ZIv0Q5coYc_lz5-cASFRDiyg0ho6JQfV2rgs", type: "full", reason: "Aucun monde où je précise pourquoi c’est ban, la mdr" }
-  ]
-};
-
+/* ---- Catégorie Ban ZA (sprite vide = initiale ; colle une URL pour mettre l’image) ---- */
+/* ---- Débannis : Pokémon réputés forts mais autorisés ---- */
 var OK = {
   title: "Débannis",
   color: "#2f7d4f",
@@ -204,7 +198,7 @@ var OK = {
     { name: "Terapagos", sprite: d(1024), type: "ok", reason: "Pas si fort sans Téracristal." }
   ]
 };
-
+/* ---- Méga autorisées, mais avec restriction (attaque ou talent banni) ---- */
 var MEGA = {
   title: "Méga restreintes",
   color: "#a8690a",
@@ -214,9 +208,9 @@ var MEGA = {
     { name: "Amphinobi", form: "Méga", sprite: "https://www.pokepedia.fr/images/thumb/c/c4/M%C3%A9ga-Amphinobi-LPZA.png/111px-M%C3%A9ga-Amphinobi-LPZA.png", type: "moves", moves: ["Battle-Bond (talent)"], reason: "Méga autorisée, mais le talent Battle-Bond est banni." }
   ]
 };
-var CATS = [DATA, MEGA, OK, ZA];
+var CATS = [DATA, MEGA, OK];
 
-
+/* ---- Clauses standard ---- */
 var CLAUSES = [
   { name: "Species Clause", desc: "Interdit d’avoir deux Pokémon de la même espèce dans une équipe." },
   { name: "Endless Battle Clause", desc: "Interdit les stratégies qui bloquent le combat indéfiniment (boucles infinies sans progression)." },
@@ -226,17 +220,22 @@ var CLAUSES = [
   { name: "Terastal Clause", desc: "Interdit la Téracristallisation : personne ne peut téracristalliser son Pokémon." }
 ];
 
-
+/* ---- Attaques, talents et objets bannis ----
+   name = FR, en = nom Showdown, desc = explication au survol,
+   why (facultatif) = ta raison du ban, ajoutée à la fin de l’explication */
 var RESTRICT = [
   { title: "Attaques bannies", color: "#e4423a", items: [
     { name: "Puissance Cachée", en: "Hidden Power", desc: "Attaque dont le type et la puissance dépendent des IV du Pokémon." },
     { name: "Assistance", en: "Assist", desc: "Utilise au hasard une attaque d’un autre Pokémon de l’équipe." },
     { name: "Hommage Posthume", en: "Last Respects", desc: "Sa puissance augmente avec le nombre d’équipiers déjà K.O." },
     { name: "Queulonage", en: "Shed Tail", desc: "Le lanceur perd la moitié de ses PV pour créer un clone et passer la main à un équipier." },
-    { name: "Second Souffle", en: "Revival Blessing", desc: "Ranime un équipier K.O. avec la moitié de ses PV." } ] },
+    { name: "Second Souffle", en: "Revival Blessing", desc: "Ranime un équipier K.O. avec la moitié de ses PV." },
+    { name: "Relais", en: "Baton Pass", desc: "Le lanceur change de Pokémon en transmettant ses boosts de statistiques et certains effets à son remplaçant." } ] },
   { title: "Talents bannis", color: "#5a3a7a", items: [
     { name: "Lunatique", en: "Moody", desc: "À chaque tour, augmente fortement une statistique au hasard et en baisse une autre." },
-    { name: "Rassemblement", en: "Power Construct", desc: "Zygarde se transforme en forme Complète quand ses PV passent à la moitié ou moins." } ] },
+    { name: "Rassemblement", en: "Power Construct", desc: "Zygarde se transforme en forme Complète quand ses PV passent à la moitié ou moins." },
+    { name: "Marque Ombre", en: "Shadow Tag", desc: "Empêche les Pokémon adverses de fuir ou d’être remplacés (sauf ceux qui ont aussi Marque Ombre)." },
+    { name: "Piège Sable", en: "Arena Trap", desc: "Empêche les Pokémon adverses au sol de fuir ou d’être remplacés." } ] },
   { title: "Objets bannis", color: "#a8690a", items: [
     { name: "Drattakite", desc: "Méga-gemme de Drattak : permet la Méga-évolution." },
     { name: "Croc Rasoir", desc: "10 % de chances d’apeurer la cible quand le porteur attaque." },
@@ -246,9 +245,16 @@ var RESTRICT = [
     { name: "Roche Royale", desc: "10 % de chances d’apeurer la cible quand le porteur attaque." },
     { name: "Ectoplasmite", desc: "Méga-gemme d’Ectoplasma : permet la Méga-évolution." },
     { name: "Braségalite", desc: "Méga-gemme de Braségali : permet la Méga-évolution." },
-    { name: "Alakazamite", desc: "Méga-gemme d’Alakazam : permet la Méga-évolution." } ] }
+    { name: "Alakazamite", desc: "Méga-gemme d’Alakazam : permet la Méga-évolution." },
+    { name: "Tortankite", desc: "Méga-gemme de Tortank : permet la Méga-évolution." },
+    { name: "Kangourexite", desc: "Méga-gemme de Kangourex : permet la Méga-évolution." },
+    { name: "Starossite", desc: "Méga-gemme de Staross : permet la Méga-évolution." },
+    { name: "Glaivodite", desc: "Méga-gemme de Glaivodo : permet la Méga-évolution." },
+    { name: "Carchacrokite Z", desc: "Méga-gemme de Carchacrok : permet la Méga-évolution en Méga-Carchacrok Z." },
+    { name: "Zygardite", desc: "Méga-gemme de Zygarde : permet la Méga-évolution." },
+    { name: "Poudre Claire", desc: "Réduit la précision des attaques adverses ciblant le porteur (esquive légèrement augmentée)." } ] }
 ];
-
+/* ================================================ */
 
 var dlg = document.getElementById("dlg"), pinned = null;
 function spriteEl(p){
